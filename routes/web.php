@@ -32,5 +32,6 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::get('user-profile', 'AuthController@me');
+    Route::get('/simulators', 'SimulatorController@index');
 
 });
