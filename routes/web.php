@@ -28,11 +28,10 @@ Route::group([
     'prefix' => 'api'
 
 ], function ($router) {
+    
+    Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::get('user-profile', 'AuthController@me');
-    Route::get('/simulators', 'SimulatorController@index');
-    Route::post('/simulators', 'SimulatorController@store');
+    
 
 });
