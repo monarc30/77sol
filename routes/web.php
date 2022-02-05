@@ -32,6 +32,6 @@ Route::group([
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
-    
-
+    Route::get('simulators', 'SimulatorController@index');
+    Route::post('simulators', 'SimulatorController@store');
 });
