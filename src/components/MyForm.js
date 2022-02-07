@@ -29,6 +29,15 @@ class MyForm extends Component {
         this.setState({ form });
     };
 
+    checkCep = event => {
+        const cep = event.target.value.replace(/\D/g, '');
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json()).then(data => {            
+            document.getElementsByName("bairro")[0].value = data.bairro
+            document.getElementsByName("cidade")[0].value = data.localidade
+        })
+    };
+
     onFormSubmit = (event) => {
         event.preventDefault();        
 
@@ -77,13 +86,14 @@ class MyForm extends Component {
                 <h2>Simulador</h2>                
 
                 <div className="four wide field">                                    
-                    <label>CEP</label>
+                    <label>CEP</label> 
                     <input 
                         type="text" 
                         name="cep" 
                         placeholder="Cep" 
                         onChange={this.handleChange}
-                        value={this.state.form.cep} />
+                        value={this.state.form.cep}
+                        onBlur={this.checkCep} />
                 </div>
                 <div className="four wide field">                
                     <label>Valor da conta</label>
@@ -102,6 +112,33 @@ class MyForm extends Component {
                         placeholder="Tipo de telhado" 
                         onChange={this.handleChange}
                         value={this.state.form.tipo_telhado} />                    
+                </div>
+
+                <hr />
+
+                <h5>* Cidade e Bairro são carregados após inserir o CEP</h5>
+                
+                <div className="four wide field">                
+                    <label>Cidade</label>
+                    <input 
+                        disabled
+                        type="text" 
+                        name="cidade" 
+                        placeholder="Cidade"
+                        onChange={this.handleChange}
+                        value={this.state.form.cidade} />
+                </div>        
+
+
+                <div className="four wide field">                
+                    <label>Bairro</label>
+                    <input 
+                        disabled
+                        type="text" 
+                        name="bairro" 
+                        placeholder="Bairro"
+                        onChange={this.handleChange}
+                        value={this.state.form.bairro} />
                 </div>                                
                 
                 <button 
