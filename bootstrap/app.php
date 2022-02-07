@@ -97,6 +97,12 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Urameshibr\Providers\FormRequestServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+
+$app->configure('cors');
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
 
 // $app->register(App\Providers\EventServiceProvider::class);
 
