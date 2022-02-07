@@ -34,4 +34,5 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::get('simulators', 'SimulatorController@index');
     Route::post('simulators', 'SimulatorController@store');
+    Route::post('simulators/{id}', 'SimulatorController@destroy');
 });
