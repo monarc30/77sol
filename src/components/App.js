@@ -1,9 +1,24 @@
 import React, { Component } from "react";
+import axios from "axios";
 import MyForm from "./MyForm";
-import "./app.css";
 import SimulatorList from "./SimulatorList";
-
+import "./app.css";
 class App extends Component {
+    state = {
+        simulators: [],
+        url: 'http://localhost:8001/api/simulators',
+
+    };
+
+    getSimulators = async () => {
+        const simulators = await axios.get(this.state.url)         
+        this.setState({ simulators: simulators.data })
+    };
+
+    componentDidMount(){
+        this.getSimulators();
+    }
+
     render() {
         return (
             <div>
@@ -16,7 +31,7 @@ class App extends Component {
                 </div>
                 <div className="ui main container">
                     <MyForm />
-                    <SimulatorList />
+                    <SimulatorList simulators={this.state.simulators} />
                 </div>
             </div>
         );        

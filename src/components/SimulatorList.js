@@ -3,6 +3,7 @@ import Simulator from "./Simulator";
 
 class SimulatorList extends Component {
     render() {
+        const simulators = this.props.simulators
         return (            
             <div className="data">
                 <br />
@@ -17,7 +18,13 @@ class SimulatorList extends Component {
                     </thead>
 
                     <tbody>
-                        <Simulator />
+                        {
+                            simulators.map((simulator) => {
+                                return(
+                                    <Simulator simulator={ simulator } key={ simulator.id  } />
+                                )
+                            })
+                        }                        
                     </tbody>
                 </table>
             </div>
