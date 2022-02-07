@@ -6,6 +6,7 @@ import "./app.css";
 class App extends Component {
     state = {
         simulators: [],
+        simulator: {},        
         url: 'http://localhost:8001/api/simulators',
 
     };
@@ -15,9 +16,54 @@ class App extends Component {
         this.setState({ simulators: simulators.data })
     };
 
+    deleteSimulator = async id => {                
+        await axios.delete(`${this.state.url}/${id}`);        
+        this.getSimulators();
+    };
+
+    createSimulator = async (data) => {
+        await axios.post(this.state.url,{
+            cep: data.cep,
+            valor: data.valor,
+            tipo_telhado: data.tipo_telhado
+        });        
+
+        this.getSimulators();
+    }
+
+    editSimulator = async (data) => {
+        this.setState({ customer: {} });
+        await axios.put(`${this.state.url}/${data.id}`, { 
+            cep: data.cep,
+            valor: data.valor,
+            tipo_telhado: data.tipo_telhado
+        });        
+
+        this.getSimulators();
+    }
+
     componentDidMount(){
         this.getSimulators();
     }
+
+    onDelete = id => {
+        this.deleteSimulator(id);
+    };
+
+    onEdit = data => {
+        //this.EditSimulator(id);
+        console.log('edit ',data);
+        this.setState({ simulator: data })
+    };
+
+    onFormSubmit = (data) => {
+        if (data.isEdit) {
+            this.editSimulator(data);
+
+        }else{
+            this.createSimulator(data);
+        }
+    };
 
     render() {
         return (
@@ -30,8 +76,15 @@ class App extends Component {
                     </div>                
                 </div>
                 <div className="ui main container">
-                    <MyForm />
-                    <SimulatorList simulators={this.state.simulators} />
+                    <MyForm 
+                        simulator={this.state.simulator} 
+                        onFormSubmit={this.onFormSubmit} 
+                    />
+                    <SimulatorList 
+                        simulators={this.state.simulators} 
+                        onDelete={this.onDelete}
+                        onEdit={this.onEdit}
+                    />
                 </div>
             </div>
         );        

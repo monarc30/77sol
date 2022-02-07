@@ -2,6 +2,14 @@ import React, { Component } from "react";
 import Simulator from "./Simulator";
 
 class SimulatorList extends Component {
+    onDelete = id => {
+        this.props.onDelete(id);
+        //console.log("list", id);
+    };
+    onEdit = data => {
+        this.props.onEdit(data);        
+        //console.log("list", data);
+    };
     render() {
         const simulators = this.props.simulators
         return (            
@@ -14,6 +22,7 @@ class SimulatorList extends Component {
                             <th>Cep</th>
                             <th>Valor da conta</th>
                             <th>Tipo de telhado</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
 
@@ -21,7 +30,12 @@ class SimulatorList extends Component {
                         {
                             simulators.map((simulator) => {
                                 return(
-                                    <Simulator simulator={ simulator } key={ simulator.id  } />
+                                    <Simulator 
+                                        simulator={ simulator } 
+                                        key={ simulator.id  } 
+                                        onDelete={this.onDelete}
+                                        onEdit={this.onEdit}
+                                    />
                                 )
                             })
                         }                        
